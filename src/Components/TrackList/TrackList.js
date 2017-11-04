@@ -5,7 +5,6 @@ import Track from '../Track/Track.js';
 class TrackList extends React.Component {
   //passes down search results to return a list of tracks.
   render() {
-    console.log(this.props.tracks)
     return (
       <div className="TrackList">
         {

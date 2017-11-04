@@ -20,7 +20,7 @@ class App extends Component {
         artist: 'artist',
         album: 'album'}
       ],
-      playListName: 'Meat is Burger',
+      playlistName: 'New Playlist',
       playlistTracks: [
         {name: 'Formed a Band',
         artist: 'Art Brut',
@@ -34,27 +34,31 @@ class App extends Component {
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
   }
 
   addTrack(track) {
-    let repeatTrack = false
-    for(let index = 0; index < this.state.playlistTracks.length; index++) {
-      if (this.state.playlistTracks[index].id === track.id) {
-        repeatTrack = true;
-      }
-    }
-
-    if(repeatTrack === false) {
-      this.setState({
-        playlistTracks: this.state.playlistTracks.concat([track])
-      })
-    }
+    this.setState({
+      playlistTracks: this.state.playlistTracks.concat([track])
+    })
   }
 
   removeTrack(track) {
     this.setState({
-      playlistTracks: this.state.playlistTracks.slice(track.id,track.id)
+      playlistTracks: this.state.playlistTracks.splice(track.id,1)
     })
+  }
+
+  updatePlaylistName(name) {
+    this.setState({
+      playlistName: name
+    })
+  }
+
+  savePlaylist() {
+    let trackURIs = []
+    console.log(trackURIs);
   }
 
   render() {
@@ -72,8 +76,10 @@ class App extends Component {
             <Playlist
             playlistTracks={this.state.playlistTracks}
             playlistName={this.state.playlistName}
+            onNameChange={this.updatePlaylistName}
             isRemoval={this.state.playlistRemoval}
             onRemove={this.removeTrack}
+            onSave={this.savePlaylist}
             />
           </div>
         </div>
