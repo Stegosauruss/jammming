@@ -4,7 +4,7 @@ import SearchBar from '../SearchBar/SearchBar.js';
 import SearchResults from '../SearchResults/SearchResults.js';
 import Playlist from '../Playlist/Playlist.js';
 import Spotify from '../../util/Spotify';
-
+const debug = false;
 
 class App extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ class App extends Component {
   }
 
   addTrack(track) {
+    //moves tracks from SearchResults to playlistTracks state.
     if(!this.state.playlistTracks.some(pTrack => pTrack.id === track.id)) {
       this.setState({
         playlistTracks: this.state.playlistTracks.concat([track])
@@ -32,35 +33,45 @@ class App extends Component {
   }
 
   removeTrack(track) {
+    //removes Tracks from playlistTracks state.
     this.setState({
       playlistTracks: this.state.playlistTracks.filter(ptrack => ptrack.id !== track.id)
     })
   }
 
   updatePlaylistName(name) {
+    //method to save playlist name to state.
     this.setState({
       playlistName: name
     })
   }
 
   savePlaylist() {
+    //method for saving playlist to Spotify API.
     let trackURIs = []
     this.state.playlistTracks.forEach(track => {
       trackURIs.push(track.uri);
     })
-    Spotify.savePlaylist(this.state.playlistName, this.state.playlistTracks);
+    Spotify.savePlaylist(this.state.playlistName, trackURIs);
   }
 
   search(term) {
-    console.log(term);
-    console.log(Spotify.search(term));
-    return Spotify.search(term).then(results => {
-      this.setState(this.searchResults: results)
+    //calls Spotify.search to return a new array for searchResults state.
+    Spotify.search(term).then(tracks => {
+      this.setState({searchResults: tracks})
     })
   }
 
   render() {
+    if (debug) {
+      //console logs when debugging
+      console.log(this.state.playlistName);
+      console.log(this.state.playlistTracks);
+      console.log(this.state.searchResults);
+      console.log(Spotify);
+    }
     return (
+      //rendering components
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">

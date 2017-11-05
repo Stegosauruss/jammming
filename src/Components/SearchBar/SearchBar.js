@@ -11,11 +11,13 @@ class SearchBar extends React.Component {
   }
 
   handleTermChange(e) {
+    //event handler to save current state of search bar input.
     let text = e.target.value;
     this.setState({term: text});
   }
 
   search(e) {
+    //event handler to log search input to App.state when search is clicked.
     this.props.onSearch(this.state.term);
   }
 

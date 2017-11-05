@@ -10,6 +10,7 @@ class Track extends React.Component {
   }
 
   renderAction() {
+    //renders + and - buttons based on which list the track appears in.
     if (this.props.isRemoval) {
       return <a
       className="Track-action"
@@ -27,10 +28,12 @@ class Track extends React.Component {
   }
 
   addTrack(event) {
+    //event handler for onClick to add a track to playlistTracks.
     this.props.onAdd(this.props.track);
   }
 
   removeTrack() {
+    //event handler for onClick to remove a track to playlistTracks.
     this.props.onRemove(this.props.track);
   }
 
