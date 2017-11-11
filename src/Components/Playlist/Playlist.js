@@ -23,7 +23,7 @@ class Playlist extends React.Component {
         defaultValue={'New Playlist'}/>
         <TrackList
         tracks={this.props.playlistTracks}
-        isRemoval={this.props.isRemoval}
+        isRemoval={true}
         onRemove={this.props.onRemove}/>
         <a
         className="Playlist-save"
